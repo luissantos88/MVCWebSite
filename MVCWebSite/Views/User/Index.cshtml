@@ -1,0 +1,94 @@
+﻿@model List<UserModel>
+@{
+    ViewData["Title"] = "User list";
+}
+
+
+<div class="text-center">
+
+    <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+        <a class="btn btn-primary" role="button" asp-asp-controller="User" asp-action="Create">Add new user</a>
+    </div>
+
+    <br />
+
+    @if (TempData["SucessMessage"] != null)
+    {
+        <div class="alert alert-success" role="alert">
+            <button type="button" class="btn btn-danger btn-sm close-alert" aria-label="Close">X</button>
+            @TempData["SucessMessage"]
+        </div>
+
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            <button type="button" class="btn btn-danger btn-sm close-alert" aria-label="Close">X</button>
+            @TempData["ErrorMessage"]
+        </div>
+    }
+
+    <br />
+
+    <h1 class="display-4">Users list</h1>
+
+    <table id="table-users" class="table table-dark table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col" style="text-align: center;">Name</th>
+                <th scope="col" style="text-align: center;">Login</th>
+                <th scope="col" style="text-align: center;">Email</th>
+                <th scope="col" style="text-align: center;">Profile</th>
+                <th scope="col" style="text-align: center;">Total Contacts</th>
+                <th scope="col" style="text-align: center;">Registration Date</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                foreach (UserModel user in Model)
+                {
+                    <tr>
+                        <th scope="row">@user.Id</th>
+                        <td style="text-align: center;">@user.Name</td>
+                        <td style="text-align: center;">@user.Login</td>
+                        <td style="text-align: center;">@user.Email</td>
+                        <td style="text-align: center;">@(user.Profile == MVCWebSite.Enums.ProfileEnum.Admin ? "Administrator" : "Default")</td>
+                        <td style="text-align: center;">
+                            <a href="javascript:" user-id="@user.Id" class="btn btn-success btn-sm btn-total-contacts">
+                                @(user.Contacts != null && user.Contacts.Any() ? user.Contacts.Count() : 0)
+                            </a>
+                        </td>
+                        <td style="text-align: center;">@user.RegistrationDate</td>
+                        <th>
+                            <div class="btn-group" role="group">
+                                <a role="button" class="btn btn-primary" asp-route-id="@user.Id" asp-asp-controller="User" asp-action="Edit">Edit</a>
+                                <a role="button" class="btn btn-danger" asp-route-id="@user.Id" asp-asp-controller="User" asp-action="DeleteConfirmation">Delete</a>
+                            </div>
+                        </th>
+                    </tr>
+                }
+            }        
+        </tbody>
+    </table>
+
+
+
+    <div id="userContactsModal" class="modal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Contact list</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>                     
+                </div>
+                <div class="modal-body">
+                    <div id="userContactList"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

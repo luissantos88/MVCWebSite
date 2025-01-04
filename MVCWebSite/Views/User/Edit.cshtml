@@ -1,0 +1,49 @@
+﻿@using MVCWebSite.Enums
+@model UserModel
+@{
+    ViewData["Title"] = "Edit User";
+}
+
+<div class="text-center">
+
+    <h1 class="display-4">Edit User</h1>
+  
+</div>
+
+<form asp-controller="User" asp-action="Edit" method="post">
+
+    <input type="hidden" asasp-for="Id" />
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" asp-for="Name"  class="form-control" placeholder="Enter your user name">
+        @Html.ValidationMessageFor(x => x.Name)
+    </div>
+  
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="text" asp-for="Email" class="form-control" placeholder="Enter your user email">
+        @Html.ValidationMessageFor(x => x.Email)
+    </div>
+
+    <div class="form-group">
+        <label for="login">Login</label>
+        <input type="text" asp-for="Login" class="form-control" placeholder="Enter your user login">
+        @Html.ValidationMessageFor(x => x.Login)
+    </div>
+
+    <div class="form-group">
+        <label for="login">Profile</label>
+        <select asp-for="Profile" class="form-control">
+            <option value="">Choose</option>
+            <option value="@ProfileEnum.Admin">Administrator</option>
+            <option value="@ProfileEnum.Default">Default</option>
+        </select>
+        @Html.ValidationMessageFor(x => x.Profile)
+    </div>
+   
+    <br />
+
+    <button type="submit" class="btn btn-primary ">Edit</button>
+   
+    <a class="btn btn-secondary " asp-controller="User" asp-action="Index">Go back</a>
+</form>

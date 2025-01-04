@@ -1,0 +1,45 @@
+﻿@model LoginModel
+@{
+    Layout = "_LayoutLogout";
+    ViewData["Title"] = "Login";
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        <button type="button" class="btn btn-danger btn-sm close-alert" aria-label="Close">X</button>
+        @TempData["ErrorMessage"]
+    </div>
+}
+
+@if (TempData["SucessMessage"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        <button type="button" class="btn btn-danger btn-sm close-alert" aria-label="Close">X</button>
+        @TempData["SucessMessage"]
+    </div>
+
+}
+
+<form asp-controller="Login" asp-action="Login" method="post" class="d-flex justify-content-center align-items-center flex-column" style="width: 40%; margin: 0 auto;">
+    <div class="mb-3 text-center" style="width: 100%;">
+        <label for="login" class="form-label" style="display: block; text-align: center;">Login</label>
+        <input type="text" asp-for="Login" class="form-control mx-auto" id="login" style="width: 50%; text-align: center;">
+        @Html.ValidationMessageFor(x => x.Login)
+    </div>
+    <div class="mb-3 text-center" style="width: 100%;">
+        <label for="password" class="form-label" style="display: block; text-align: center;">Password</label>
+        <input type="password" asp-for="Password" class="form-control mx-auto" id="password" style="width: 50%; text-align: center;">
+        @Html.ValidationMessageFor(x => x.Password)
+    </div>
+
+    <br />
+
+    <p class="mb-4 text-sm-center mx-auto">
+        Forgot your password?
+        <a asp-action="ResetMyPassword" asp-controller="Login" class="text-primary text-gradient font-weight-bold">Reset my password</a>
+    </p>
+
+    <button type="submit" class="btn btn-primary w-50">LOGIN</button>
+</form>
+
